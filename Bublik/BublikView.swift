@@ -20,7 +20,11 @@ final class BublikView: UIView {
         
         shape = CAShapeLayer()
         let center = CGPoint(x: radius, y: radius)
-        shape.path = UIBezierPath(arcCenter: center, radius: radius - lineWidth / 2, startAngle: 0, endAngle: 2 * .pi, clockwise: true).cgPath
+        shape.path = UIBezierPath(arcCenter: center,
+                                  radius: radius - lineWidth / 2,
+                                  startAngle: 0,
+                                  endAngle: 2 * .pi,
+                                  clockwise: true).cgPath
         shape.fillColor = UIColor.clear.cgColor
         shape.strokeColor = UIColor.red.cgColor
         shape.lineWidth = lineWidth
@@ -34,18 +38,20 @@ final class BublikView: UIView {
     
     func changeColor() {
         shape.strokeColor = UIColor(
-            red: CGFloat.random(in: 0...1.0),
+            red:   CGFloat.random(in: 0...1.0),
             green: CGFloat.random(in: 0...1.0),
-            blue: CGFloat.random(in: 0...1.0),
+            blue:  CGFloat.random(in: 0...1.0),
             alpha: 1.0).cgColor
     }
         
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
-        let ofsetX = bounds.midX - point.x
-        let ofsetY = bounds.midY - point.y
-        let centerOfset = CGFloat(sqrt(Double(ofsetX * ofsetX + ofsetY * ofsetY)))
-        if (centerOfset >= radius - lineWidth) && (centerOfset <= radius) {
+        
+        let centerOffsetX = bounds.midX - point.x
+        let centerOffsetY = bounds.midY - point.y
+        let offset = hypot(centerOffsetX, centerOffsetY)
+        
+        if (offset >= radius - lineWidth) && (offset <= radius) {
             return view
         } else {
             return nil

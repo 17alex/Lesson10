@@ -12,13 +12,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     lazy var bublik: BublikView = {
         let bublik = BublikView(radius: 75, lineWidth: 30)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(bublikPress))
         bublik.addGestureRecognizer(tapGesture)
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture(gesture:)))
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan(gesture:)))
         bublik.addGestureRecognizer(panGesture)
         return bublik
     }()
@@ -31,11 +31,12 @@ class ViewController: UIViewController {
         return button
     }()
     
-    var pointBublik: CGPoint = .zero
+    private var pointBublik: CGPoint = .zero
+    private var scaleBublik: CGFloat = 1
     
     //MARK: - Metods
     
-    @objc private func panGesture(gesture: UIPanGestureRecognizer) {
+    @objc private func pan(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
             pointBublik = bublik.frame.origin
         }
@@ -49,9 +50,11 @@ class ViewController: UIViewController {
     }
     
     @objc private func bublikPress() {
-        print("BUBLIK press")
+        print("🥯 BUBLIK press")
         bublik.changeColor()
     }
+    
+    //MARK: - LiveCycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
