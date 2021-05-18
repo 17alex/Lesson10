@@ -38,7 +38,7 @@ final class BublikView: UIView {
     
     func changeColor() {
         shape.strokeColor = UIColor(
-            red:   CGFloat.random(in: 0...1.0),
+            red:   1.0,
             green: CGFloat.random(in: 0...1.0),
             blue:  CGFloat.random(in: 0...1.0),
             alpha: 1.0).cgColor
@@ -46,6 +46,8 @@ final class BublikView: UIView {
         
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
+        print("Bublik: view =", view)
+        if view !== self { return view }
         
         let centerOffsetX = bounds.midX - point.x
         let centerOffsetY = bounds.midY - point.y
