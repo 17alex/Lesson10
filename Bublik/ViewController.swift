@@ -14,16 +14,6 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    lazy var sameView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .blue
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(sameViewPress))
-        view.addGestureRecognizer(tapGesture)
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(sameViewPan(gesture:)))
-        view.addGestureRecognizer(panGesture)
-        return view
-    }()
-    
     lazy var bublik: BublikView = {
         let bublik = BublikView(radius: 75, lineWidth: 30)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(bublikPress))
@@ -42,10 +32,8 @@ final class ViewController: UIViewController {
     }()
     
     private var pointBublik: CGPoint = .zero
-    private var pointSameView: CGPoint = .zero
-    private var scaleBublik: CGFloat = 1
     
-    //MARK: - Metods gesture
+    //MARK: - Metods
     
     @objc private func bublikPan(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
@@ -56,23 +44,12 @@ final class ViewController: UIViewController {
         bublik.frame.origin = .init(x: pointBublik.x + location.x, y: pointBublik.y + location.y)
     }
     
-    @objc private func sameViewPan(gesture: UIPanGestureRecognizer) {
-        if gesture.state == .began {
-            pointSameView = sameView.frame.origin
-        }
-        
-        let location = gesture.translation(in: button)
-        sameView.frame.origin = .init(x: pointSameView.x + location.x, y: pointSameView.y + location.y)
-    }
-    
-    //MARK: - Metods
-    
     @objc private func buttonPress() {
         print("press button")
         button.backgroundColor = UIColor(
-            red:   CGFloat.random(in: 0...1.0),
+            red:   CGFloat.random(in: 0...0.7),
             green: 1.0,
-            blue:  CGFloat.random(in: 0...1.0),
+            blue:  CGFloat.random(in: 0...0.7),
             alpha: 1.0)
     }
     
@@ -81,25 +58,15 @@ final class ViewController: UIViewController {
         bublik.changeColor()
     }
     
-    @objc private func sameViewPress() {
-        print("sameView press")
-        sameView.backgroundColor = UIColor(
-            red:   CGFloat.random(in: 0...1.0),
-            green: CGFloat.random(in: 0...1.0),
-            blue:  1.0,
-            alpha: 1.0)
-    }
-    
     //MARK: - LiveCycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = #colorLiteral(red: 0.9181670368, green: 0.9181670368, blue: 0.9181670368, alpha: 1)
+        view.backgroundColor = .white
         
         view.addSubview(button)
         view.addSubview(bublik)
-        bublik.addSubview(sameView)
     }
 
     override func viewDidLayoutSubviews() {
@@ -110,7 +77,5 @@ final class ViewController: UIViewController {
         
         bublik.frame.size = .init(width: 150, height: 150)
         bublik.center = view.center
-        
-        sameView.frame = .init(x: 10, y: 10, width: 100, height: 100)
     }
 }

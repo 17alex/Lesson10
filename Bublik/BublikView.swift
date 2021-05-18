@@ -17,10 +17,13 @@ final class BublikView: UIView {
         self.radius = radius
         self.lineWidth = lineWidth
         super.init(frame: .zero)
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
         shape = CAShapeLayer()
-        let center = CGPoint(x: radius, y: radius)
-        shape.path = UIBezierPath(arcCenter: center,
+        shape.path = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius),
                                   radius: radius - lineWidth / 2,
                                   startAngle: 0,
                                   endAngle: 2 * .pi,
@@ -29,7 +32,6 @@ final class BublikView: UIView {
         shape.strokeColor = UIColor.red.cgColor
         shape.lineWidth = lineWidth
         self.layer.addSublayer(shape)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -39,14 +41,14 @@ final class BublikView: UIView {
     func changeColor() {
         shape.strokeColor = UIColor(
             red:   1.0,
-            green: CGFloat.random(in: 0...1.0),
-            blue:  CGFloat.random(in: 0...1.0),
+            green: CGFloat.random(in: 0...0.7),
+            blue:  CGFloat.random(in: 0...0.7),
             alpha: 1.0).cgColor
     }
         
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let view = super.hitTest(point, with: event)
-        print("Bublik: view =", view)
+        
         if view !== self { return view }
         
         let centerOffsetX = bounds.midX - point.x
