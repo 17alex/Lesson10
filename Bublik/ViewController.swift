@@ -31,17 +31,17 @@ final class ViewController: UIViewController {
         return button
     }()
     
-    private var pointBublik: CGPoint = .zero
+    private var point: CGPoint = .zero
     
     //MARK: - Metods
     
     @objc private func bublikPan(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
-            pointBublik = bublik.frame.origin
+            point = bublik.frame.origin
         }
         
         let location = gesture.translation(in: button)
-        bublik.frame.origin = .init(x: pointBublik.x + location.x, y: pointBublik.y + location.y)
+        bublik.frame.origin = .init(x: point.x + location.x, y: point.y + location.y)
     }
     
     @objc private func buttonPress() {

@@ -19,8 +19,13 @@ final class BublikView: UIView {
         super.init(frame: .zero)
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        print("didMoveToSuperview BublikView")
         
         shape = CAShapeLayer()
         shape.path = UIBezierPath(arcCenter: CGPoint(x: radius, y: radius),
@@ -32,10 +37,6 @@ final class BublikView: UIView {
         shape.strokeColor = UIColor.red.cgColor
         shape.lineWidth = lineWidth
         self.layer.addSublayer(shape)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func changeColor() {
