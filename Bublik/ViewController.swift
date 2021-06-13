@@ -25,7 +25,7 @@ final class ViewController: UIViewController {
     
     lazy var button: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Button", for: .normal)
+        button.setTitle("ViewContoller2", for: .normal)
         button.backgroundColor = .green
         button.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
         return button
@@ -46,11 +46,7 @@ final class ViewController: UIViewController {
     
     @objc private func buttonPress() {
         print("press button")
-        button.backgroundColor = UIColor(
-            red:   CGFloat.random(in: 0...0.7),
-            green: 1.0,
-            blue:  CGFloat.random(in: 0...0.7),
-            alpha: 1.0)
+        present(SecondViewController(), animated: true, completion: nil)
     }
     
     @objc private func bublikPress() {
